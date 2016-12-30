@@ -30,7 +30,7 @@ public abstract class MovingObject : MonoBehaviour {
 
         if (hit.transform == null)
         {
-            StartCoroutine(SmoothMovement(end));
+            StartCoroutine(SmoothMovement(end));   
             return true;
         }
 
@@ -40,12 +40,13 @@ public abstract class MovingObject : MonoBehaviour {
     protected IEnumerator SmoothMovement (Vector3 end)
     {
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
-
+                
         while (sqrRemainingDistance > float.Epsilon)
         {
             Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, inverseMoveTime * Time.deltaTime);
             rb2D.MovePosition(newPosition);
-            sqrRemainingDistance = (transform.position = end).sqrMagnitude;
+            sqrRemainingDistance = (transform.position - end).sqrMagnitude;
+
             yield return null;
         }
     }
@@ -54,7 +55,7 @@ public abstract class MovingObject : MonoBehaviour {
         where T : Component
     {
         RaycastHit2D hit;
-        bool canMove = Move(xDir, yDir, out hit);
+        bool canMove = Move(xDir, yDir, out hit);        
 
         if (hit.transform == null)
             return;
@@ -63,6 +64,8 @@ public abstract class MovingObject : MonoBehaviour {
 
         if (!canMove && hitComponent != null)
             OnCantMove(hitComponent);
+
+        
     }
 
     protected abstract void OnCantMove<T>(T component)

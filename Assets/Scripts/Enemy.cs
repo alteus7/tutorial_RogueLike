@@ -48,6 +48,8 @@ public class Enemy : MovingObject {
         }
 
         AttemptMove<Player>(xDir, yDir);
+
+        Debug.Log("end AttempMove_Enemy");
     }
 
     protected override void OnCantMove<T>(T component)
