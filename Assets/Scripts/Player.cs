@@ -68,7 +68,7 @@ public class Player : MovingObject {
             {
                 touchOrigin = myTouch.position;
             }
-            else if (myTouch.phase == TouchPhase.Ended && touchOrigin.x <= 0)
+            else if (myTouch.phase == TouchPhase.Ended && touchOrigin.x >= 0)
             {
                 Vector2 touchEnd = myTouch.position;
                 float x = touchEnd.x - touchOrigin.x;
