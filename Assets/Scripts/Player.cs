@@ -51,7 +51,7 @@ public class Player : MovingObject {
         int vertical = 0;
 
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
-        
+                
         horizontal = (int)Input.GetAxisRaw("Horizontal");
         vertical = (int)Input.GetAxisRaw("Vertical");
 
@@ -59,6 +59,27 @@ public class Player : MovingObject {
         {
             vertical = 0;
         }
+
+        /*
+        if (Input.GetMouseButton(0))
+        {
+            touchOrigin = Input.mousePosition;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            Vector2 touchEnd = Input.mousePosition;
+
+            float x = touchEnd.x - touchOrigin.x;
+            float y = touchEnd.y - touchOrigin.y;
+            touchOrigin.x = -1;
+            
+            if (Mathf.Abs(x) > Mathf.Abs(y))
+                horizontal = x > 0 ? 1 : -1;
+            else
+                if (y != 0)
+                vertical = y > 0 ? 1 : -1;
+        }
+        */
 
 #elif UNITY_IOS || UNITY_ANDROID || UNITY_IPHONE
 
@@ -70,13 +91,16 @@ public class Player : MovingObject {
             }
             else if (myTouch.phase == TouchPhase.Ended && touchOrigin.x >= 0)
             {
-                Vector2 touchEnd = myTouch.position;
+                Vector2 touchEnd = myTouch.position;                
                 float x = touchEnd.x - touchOrigin.x;
                 float y = touchEnd.y - touchOrigin.y;
                 touchOrigin.x = -1;
+                
+                
                 if (Mathf.Abs(x) > Mathf.Abs(y))
                     horizontal = x > 0 ? 1 : -1;
                 else
+                    if (y != 0) 
                     vertical = y > 0 ? 1 : -1;
             }
 
@@ -85,7 +109,7 @@ public class Player : MovingObject {
 #endif
 
 
-        if (horizontal != 0 || vertical != 0)
+            if (horizontal != 0 || vertical != 0)
         {            
             AttemptMove<Wall>(horizontal, vertical);
 
